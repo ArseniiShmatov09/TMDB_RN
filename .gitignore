@@ -1,10 +1,26 @@
-# OSX
-#
-.DS_Store
+node_modules/
+android/
+ios/
+npm-debug.log*
+yarn-error.log
+yarn-debug.log*
 
-# Xcode
-#
+# Metro Bundler
+.metro-health-check*
+*.jsbundle
+*.jsbundle.meta
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+Icon
+
+._*
+
 build/
+DerivedData/
+
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -13,58 +29,59 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
+xcuserdata/
 *.xccheckout
 *.moved-aside
-DerivedData
 *.hmap
 *.ipa
+*.app
+*.dSYM/
 *.xcuserstate
-**/.xcode.env.local
+project.xcworkspace/
 
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
+
+/android/build/
+/android/app/build/
+/android/.idea/
+/android/.gradle/
+
+
 *.iml
 *.hprof
 .cxx/
+
+
+local.properties
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
 *.keystore
 !debug.keystore
+
+# Kotlin
 .kotlin/
 
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-error.log
+# ===================================================================
+# VS Code
+# ===================================================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
 
-**/fastlane/report.xml
-**/fastlane/Preview.html
-**/fastlane/screenshots
-**/fastlane/test_output
-
-# Bundle artifact
-*.jsbundle
+.env
+.env.*
+!.env.example
 
 # Ruby / CocoaPods
-**/Pods/
+/ios/Pods/
 /vendor/bundle/
-
-# Temporary files created by Metro to check the health of the file watcher
-.metro-health-check*
-
-# testing
-/coverage
+Gemfile.lock
 
 # Yarn
 .yarn/*
@@ -73,3 +90,20 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots/
+**/fastlane/test_output/
+
+
+coverage/
+/coverage/
+/jest-coverage/
+.jest-cache
+
+.watchmanconfig
+
+sentry.properties
+*.sentryclirc
