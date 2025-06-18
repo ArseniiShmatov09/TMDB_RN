@@ -1,12 +1,10 @@
 import { StyleSheet, useColorScheme, View, Text } from 'react-native';
-
+import MovieListScreen from './src/modules/movie_list/screens/movie_list_screen';
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={styles.container}>
-     <Text>ddd</Text>
-    </View>
+     <MovieListScreen />
   );
 }
 
