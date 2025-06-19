@@ -1,17 +1,13 @@
-import { StyleSheet, useColorScheme, View, Text } from 'react-native';
-import MovieListScreen from './src/modules/movie_list/screens/movie_list_screen';
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './src/navigation/app_navigator';
 
+const App = () => {
   return (
-     <MovieListScreen />
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;

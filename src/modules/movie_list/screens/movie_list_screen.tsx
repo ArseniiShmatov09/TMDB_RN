@@ -10,11 +10,15 @@ import {
 import MovieCard from '../components/movie_card';
 import { Spinner } from '../../../components/spinner';
 import { useMovies } from '../hooks/use_movies';
+import { useNavigation } from '@react-navigation/native';
+import { MovieListNavigationProp } from '../../../navigation/navigation_types';
+
 
 const MovieListScreen = () => {
   const { movies, isLoading, isLoadingMore, error, loadMore, refresh } =
     useMovies();
-
+  const navigation = useNavigation<MovieListNavigationProp>();
+  
   if (isLoading) {
     return <Spinner />;
   }
@@ -40,7 +44,7 @@ const MovieListScreen = () => {
         renderItem={({ item }) => (
           <MovieCard
             movie={item}
-            onPress={() => console.log('Go to movie details:', item.id)}
+            onPress={() => navigation.navigate('MovieDetail', { movieId: item.id })}
           />
         )}
         keyExtractor={item => item.id.toString()}
