@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Movie } from '../../../shared/types/movie';
-import { getPopularMovies } from '../services/api/get_movie_list';
+import { getFavoriteMovies } from '../services/api/favorites_api';
 
-export const useMovies = () => {
+export const useFavoritesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -12,7 +13,7 @@ export const useMovies = () => {
   const pageRef = useRef(1);
   const isFetching = useRef(false);
 
-  const fetchMovies = useCallback(async (pageToFetch: number) => {
+  const fetchFavorites = useCallback(async (pageToFetch: number) => {
     if (isFetching.current) return;
     isFetching.current = true;
 
@@ -20,7 +21,7 @@ export const useMovies = () => {
     setError(null);
 
     try {
-      const data = await getPopularMovies(pageToFetch);
+      const data = await getFavoriteMovies(pageToFetch);
 
       setMovies(prev => {
         const ids = new Set(prev.map(m => m.id));
@@ -31,7 +32,7 @@ export const useMovies = () => {
       pageRef.current = pageToFetch;
       if (data.page >= data.total_pages) setHasMore(false);
     } catch {
-      setError('Не удалось загрузить фильмы');
+      setError('Не удалось загрузить избранные фильмы');
     } finally {
       setIsLoading(false);
       setIsLoadingMore(false);
@@ -39,20 +40,22 @@ export const useMovies = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchMovies(1);
-  }, [fetchMovies]);
+  const refresh = useCallback(() => {
+    setHasMore(true);
+    pageRef.current = 1;
+    fetchFavorites(1);
+  }, [fetchFavorites]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
 
   const loadMore = () => {
     if (!hasMore) return;
-    fetchMovies(pageRef.current + 1);
+    fetchFavorites(pageRef.current + 1);
   };
 
-  const refresh = () => {
-    setHasMore(true);
-    pageRef.current = 1;
-    fetchMovies(1);
-  };
-
-  return { movies, isLoading, isLoadingMore, error, hasMore, loadMore, refresh };
+  return { movies, isLoading, isLoadingMore, error, loadMore, refresh };
 };
