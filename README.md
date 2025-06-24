@@ -1,97 +1,145 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Movie App
+## A mobile application built with React Native that allows users to discover popular movies, view detailed information, and manage a personal list of favorites. This app uses TheMovieDB (TMDB) API as its data source.
+### ✨ Features
+Browse a list of popular movies with infinite scroll.
 
-# Getting Started
+View detailed information for any movie.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Add movies to a local "Favorites" list.
 
-## Step 1: Start Metro
+Remove movies from "Favorites".
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+View all favorite movies on a dedicated screen.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+Favorites persist between app sessions.
 
-```sh
-# Using npm
-npm start
+### 🛠️ Technology Stack
+Framework: React Native
 
-# OR using Yarn
-yarn start
+API: TheMovieDB (TMDB) API
+
+Navigation: React Navigation 
+
+### 🚀 Setup and Installation
+Clone the repository:
+git clone [https://github.com/your-username/react-native-movie-app.git](https://github.com/ArseniiShmatov09/TMDB_RN.git)
+
+```cd TMDB_RN```
+
+#### Install dependencies:
+```
+npm install
+#or
+yarn install
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+#### Run the application:
+For iOS:
+```npx pod-install
+npx react-native run-ios
 ```
 
-### iOS
+For Android:
+```npx react-native run-android```
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## ✅ Acceptance Criteria (AC)
+### The project is broken down into the following User Stories and their corresponding Acceptance Criteria.
+#### User Story 1: Movie List Screen (Main Screen)
+As a user, I want to see a list of popular movies so that I can find something interesting to watch.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+AC 1.1: Fetch Movie List: When the app is opened, it should fetch and display a list of popular movies from the TMDB API (e.g., /movie/popular endpoint).
 
-```sh
-bundle install
-```
+AC 1.2: Movie Card Display: Each movie in the list is represented by a card that must contain:
 
-Then, and every time you update your native dependencies, run:
+Movie Poster
 
-```sh
-bundle exec pod install
-```
+Movie Title
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Release Year
 
-```sh
-# Using npm
-npm run ios
+Rating (e.g., 7.8/10)
 
-# OR using Yarn
-yarn ios
-```
+An icon to add to favorites (e.g., an empty heart/star).
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+AC 1.3: Loading State: A loading indicator (spinner) must be shown while the initial movie list is being fetched.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+AC 1.4: Infinite Scroll: When the user scrolls to the bottom of the list, the app automatically fetches and appends the next page of movies to the list. A loading indicator should appear at the bottom during this fetch.
 
-## Step 3: Modify your app
+AC 1.5: Error Handling: If the API call fails (e.g., no internet connection), an error message (e.g., "Failed to load movies. Please check your connection.") and a "Retry" button must be displayed.
 
-Now that you have successfully run the app, let's make changes!
+AC 1.6: Navigation to Details: Tapping on any movie card navigates the user to the Movie Detail screen for that specific movie.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+#### User Story 2: Movie Detail Screen
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+As a user, I want to see detailed information about a movie so that I can decide if I want to watch it.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+AC 2.1: Display Detailed Information: Upon navigating to this screen, it must fetch and display the following details for the selected movie (using e.g., /movie/{movie_id} endpoint):
 
-## Congratulations! :tada:
+High-resolution poster or backdrop image.
 
-You've successfully run and modified your React Native App. :partying_face:
+Title.
 
-### Now what?
+Original Title (if different).
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+Full description (overview/synopsis).
 
-# Troubleshooting
+Rating.
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Release Date.
 
-# Learn More
+List of Genres.
 
-To learn more about React Native, take a look at the following resources:
+Runtime (if available from the API).
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+AC 2.2: Favorites Button: A prominent "Add to Favorites" icon/button is present. Its state (e.g., a filled vs. empty heart) must correctly reflect whether the movie is currently in 
+the user's favorites.
+
+AC 2.3: Back Navigation: A back button in the header or the native device back action must return the user to the previous screen (e.g., the Movie List screen), preserving the scroll position.
+
+#### User Story 3: Favorites Functionality
+As a user, I want to add and remove movies from my favorites list so I can easily access them later.
+
+AC 3.1: Add to Favorites: When the user taps the "Add to Favorites" icon on either the list or detail screen:
+
+The icon's state immediately toggles to its "favorited" state (e.g., filled heart).
+
+The movie's ID is saved to the local device storage (e.g., AsyncStorage).
+
+AC 3.2: Remove from Favorites: When the user taps the "favorited" icon on a movie that is already in favorites:
+
+The icon's state immediately toggles back to its default state (e.g., empty heart).
+
+The movie's ID is removed from the local device storage.
+
+AC 3.3: Persistence: The list of favorite movies must persist across app sessions (i.e., the list is retained after the user closes and reopens the app).
+
+#### User Story 4: Favorites Screen
+As a user, I want to view all my favorite movies on a separate screen.
+
+AC 4.1: Access Favorites Screen: The app must include clear navigation to access the "Favorites" screen (e.g., via a bottom tab bar).
+
+AC 4.2: Display Favorites List: This screen displays a list of all movies that the user has marked as favorite. The card format should be consistent with the main movie list.
+
+AC 4.3: Empty State: If no movies have been added to favorites, the screen must display a message indicating that the list is empty (e.g., "You haven't added any favorites yet.").
+
+AC 4.4: Interaction:
+
+Tapping on a movie card navigates to its corresponding Movie Detail screen.
+
+The user can remove a movie from favorites directly from this screen (via the favorite icon on the card), and the movie should be immediately removed from the list view.
+#### ❓ Questions for Clarification
+To further refine these criteria, the following points should be discussed:
+
+UI/UX Design: Is there a specific design mock-up (Figma, Sketch) to follow, or should the developer use their discretion?
+
+Navigation Style: Will navigation be handled by a Tab Bar (bottom), a Drawer (side menu), or something else?
+
+Localization: Will the app support multiple languages, or only English?
+
+Platform Specifics: Should the UI be identical on iOS and Android, or can it adapt to native platform conventions?
+
+Search Functionality: Is a movie search feature planned for a future release? This might influence the initial architecture.
+
+
+https://github.com/user-attachments/assets/7c8e5e4e-1045-4bfc-b803-824faa4062da
+
