@@ -7,3 +7,10 @@ export const getPopularMovies = async (page: number) => {
   });
   return response.data;
 };
+
+export const searchMovies = async (query: string, page: number) => {
+  const response = await apiClient.get<MovieListResponse>('/search/movie', {
+    params: { query, page },
+  });
+  return response.data;
+};

@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Movie } from '../../../shared/types/movie';
-import { getPopularMovies } from '../services/api/get_movie_list';
+import { getPopularMovies, searchMovies } from '../services/api/get_movie_list';
 
-export const useMovies = () => {
+export const useMovies = (query: string) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -20,7 +20,9 @@ export const useMovies = () => {
     setError(null);
 
     try {
-      const data = await getPopularMovies(pageToFetch);
+      const data = query
+        ? await searchMovies(query, pageToFetch)
+        : await getPopularMovies(pageToFetch);
 
       setMovies(prev => {
         const ids = new Set(prev.map(m => m.id));
@@ -29,7 +31,12 @@ export const useMovies = () => {
       });
 
       pageRef.current = pageToFetch;
-      if (data.page >= data.total_pages) setHasMore(false);
+      if (data.page >= data.total_pages) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+
     } catch {
       setError('Не удалось загрузить фильмы');
     } finally {
@@ -37,20 +44,23 @@ export const useMovies = () => {
       setIsLoadingMore(false);
       isFetching.current = false;
     }
-  }, []);
+  }, [query]); 
 
   useEffect(() => {
+    setMovies([]);
+    pageRef.current = 1;
+    setHasMore(true);
     fetchMovies(1);
-  }, [fetchMovies]);
+  }, [query, fetchMovies]);
 
   const loadMore = () => {
-    if (!hasMore) return;
+    if (!hasMore || isFetching.current) return;
     fetchMovies(pageRef.current + 1);
   };
 
   const refresh = () => {
-    setHasMore(true);
     pageRef.current = 1;
+    setHasMore(true);
     fetchMovies(1);
   };
 
