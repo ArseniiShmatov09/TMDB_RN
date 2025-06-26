@@ -9,9 +9,11 @@ import {
   Button
 } from 'react-native';
 import { Spinner } from '../../../components/spinner';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ActorsStackParamList } from '../../../navigation/navigation_types';
 import { useActors } from '../hooks/use_person';
 import ActorCard from '../components/person_card';
-
 
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -26,12 +28,16 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
+type ActorListNavigationProp = StackNavigationProp<ActorsStackParamList, 'ActorList'>;
+
 const ActorListScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const { actors, isLoading, isLoadingMore, error, loadMore, refresh } =
     useActors(debouncedSearchQuery);
+    
+  const navigation = useNavigation<ActorListNavigationProp>();
 
   const renderEmptyComponent = () => {
     if (isLoading && actors.length === 0) return null;
@@ -74,7 +80,7 @@ const ActorListScreen = () => {
         renderItem={({ item }) => (
           <ActorCard
             actor={item}
-            onPress={() => { /* TODO: Navigate to Actor Details */ }}
+            onPress={() => navigation.navigate('ActorDetail', { actorId: item.id })}
           />
         )}
         keyExtractor={item => item.id.toString()}

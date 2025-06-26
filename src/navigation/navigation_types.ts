@@ -15,7 +15,8 @@ export type FavoritesStackParamList = {
 
 export type ActorsStackParamList = {
   ActorList: undefined;
-  // ActorDetail: { actorId: number }; 
+  ActorDetail: { actorId: number };
+  MovieDetail: { movieId: number };
 };
 
 export type RootTabParamList = {
@@ -36,4 +37,13 @@ export type MovieDetailScreenRouteProp = RouteProp<HomeStackParamList | Favorite
 export type MovieDetailScreenProps = {
   navigation: MovieDetailScreenNavigationProp;
   route: MovieDetailScreenRouteProp;
+};
+
+export type ActorDetailScreenRouteProp = RouteProp<ActorsStackParamList, 'ActorDetail'>;
+
+export type ActorDetailScreenNavigationProp = StackNavigationProp<ActorsStackParamList, 'ActorDetail'>;
+
+export type ActorDetailScreenProps = {
+  navigation: ActorDetailScreenNavigationProp;
+  route: ActorDetailScreenRouteProp;
 };

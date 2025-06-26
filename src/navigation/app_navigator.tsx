@@ -8,6 +8,7 @@ import MovieListScreen from '../modules/movie_list/screens/movie_list_screen';
 import MovieDetailScreen from '../modules/movie_details/screens/movie_details_screen';
 import FavoriteMoviesScreen from '../modules/favorites/screens/favorite_movies_screen';
 import ActorListScreen from '../modules/person/screens/person_list';
+import ActorDetailScreen from '../modules/person/screens/peson_details_screen';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const HomeStack = createStackNavigator<HomeStackParamList>();
@@ -31,6 +32,8 @@ const FavoritesStackNavigator = () => (
 const ActorsStackNavigator = () => (
   <ActorsStack.Navigator>
     <ActorsStack.Screen name="ActorList" component={ActorListScreen} options={{ title: 'Популярные актеры' }} />
+    <ActorsStack.Screen name="ActorDetail" component={ActorDetailScreen} options={{ title: '', headerBackTitle: '', headerTransparent: true }} />
+    <ActorsStack.Screen name="MovieDetail" component={MovieDetailScreen} options={{ title: '', headerBackTitle: '', headerTransparent: true }} />
   </ActorsStack.Navigator>
 );
 
@@ -39,7 +42,6 @@ const AppNavigator = () => {
     <Tab.Navigator
       screenOptions={
         ({ route }) => ({
-        
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = '';
           if (route.name === 'Home') {
