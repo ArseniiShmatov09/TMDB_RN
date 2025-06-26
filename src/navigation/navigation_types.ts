@@ -12,9 +12,16 @@ export type FavoritesStackParamList = {
   MovieDetail: { movieId: number }; 
 };
 
+
+export type ActorsStackParamList = {
+  ActorList: undefined;
+  // ActorDetail: { actorId: number }; 
+};
+
 export type RootTabParamList = {
   Home: undefined;
   Favorites: undefined;
+  Actors: undefined;
 };
 
 export type MovieListNavigationProp = StackNavigationProp<HomeStackParamList, 'MovieList'>;
