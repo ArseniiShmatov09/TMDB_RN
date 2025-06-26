@@ -2,15 +2,18 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { RootTabParamList, HomeStackParamList, FavoritesStackParamList } from './navigation_types';
+import { RootTabParamList, HomeStackParamList, FavoritesStackParamList, ActorsStackParamList } from './navigation_types';
 
 import MovieListScreen from '../modules/movie_list/screens/movie_list_screen';
 import MovieDetailScreen from '../modules/movie_details/screens/movie_details_screen';
 import FavoriteMoviesScreen from '../modules/favorites/screens/favorite_movies_screen';
+import ActorListScreen from '../modules/person/screens/person_list';
+import ActorDetailScreen from '../modules/person/screens/peson_details_screen';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const HomeStack = createStackNavigator<HomeStackParamList>();
 const FavoritesStack = createStackNavigator<FavoritesStackParamList>();
+const ActorsStack = createStackNavigator<ActorsStackParamList>();
 
 const HomeStackNavigator = () => (
   <HomeStack.Navigator>
@@ -26,26 +29,33 @@ const FavoritesStackNavigator = () => (
   </FavoritesStack.Navigator>
 );
 
+const ActorsStackNavigator = () => (
+  <ActorsStack.Navigator>
+    <ActorsStack.Screen name="ActorList" component={ActorListScreen} options={{ title: 'Популярные актеры' }} />
+    <ActorsStack.Screen name="ActorDetail" component={ActorDetailScreen} options={{ title: '', headerBackTitle: '', headerTransparent: true }} />
+    <ActorsStack.Screen name="MovieDetail" component={MovieDetailScreen} options={{ title: '', headerBackTitle: '', headerTransparent: true }} />
+  </ActorsStack.Navigator>
+);
+
 const AppNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={
         ({ route }) => ({
-        
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = '';
           if (route.name === 'Home') {
             iconName = focused ? 'film' : 'film-outline';
           } else if (route.name === 'Favorites') {
             iconName = focused ? 'heart' : 'heart-outline';
+          } else if (route.name === 'Actors') {
+            iconName = focused ? 'people' : 'people-outline';
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
         headerShown: false, 
-
-        
          tabBarStyle: {
       backgroundColor: '#BABABA', 
     },
@@ -53,6 +63,7 @@ const AppNavigator = () => {
     >
       <Tab.Screen name="Home" component={HomeStackNavigator} options={{ title: 'Главная' }} />
       <Tab.Screen name="Favorites" component={FavoritesStackNavigator} options={{ title: 'Избранное' }} />
+      <Tab.Screen name="Actors" component={ActorsStackNavigator} options={{ title: 'Актеры' }} />
     </Tab.Navigator>
   );
 };
