@@ -1,5 +1,3 @@
-// /src/features/movie-discovery/screens/MovieDetailScreen.tsx
-
 import React from 'react';
 import {
   View,
